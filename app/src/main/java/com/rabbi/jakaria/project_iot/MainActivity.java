@@ -7,7 +7,10 @@ import android.util.Log;
 
 import com.google.gson.JsonElement;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.ToneAnalyzer;
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneChatOptions;
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneInput;
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneOptions;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.Utterance;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.UtteranceAnalyses;
 
@@ -24,7 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    final ToneAnalyzer toneAnalyzer = new ToneAnalyzer("2018-03-14");
+    final ToneAnalyzer toneAnalyzer = new ToneAnalyzer("2018-03-17");
     String username;
     String password;
 
@@ -60,32 +63,21 @@ public class MainActivity extends AppCompatActivity {
 
                 {
                     try {
-                        JSONObject tonechat = new JSONObject(IOUtils.toString(getResources().openRawResource(R.raw.tonechat), "UTF-8")); // Convert the file into a JSON object
-                        JSONArray jArray = tonechat.getJSONArray("utterances");
+                        JSONObject tones = new JSONObject(IOUtils.toString(getResources().openRawResource(R.raw.tonechat), "UTF-8")); // Convert the file into a JSON object
 
-                        List<Utterance> utterances = new ArrayList<>();
-                        for (int i = 0; i < jArray.length(); i++) {
-                            Utterance utterance = new Utterance.Builder()
-                                    .text(jArray.getJSONObject(i).get("text").toString())
-                                    .user(jArray.getJSONObject(i).get("user").toString())
-                                    .build();
-                            utterances.add(utterance);
+                        ToneInput toneInput = new ToneInput.Builder()
+                                .text(tones.getString("text")).build();
+                        ToneOptions options = new ToneOptions.Builder()
+                                .toneInput(toneInput).build();
+                        ToneAnalysis tone = toneAnalyzer.tone(options).execute();
+                        System.out.println(tone);
 
-                            ToneChatOptions options = new ToneChatOptions.Builder()
-                                    .utterances(utterances).build();
-                            UtteranceAnalyses tone = toneAnalyzer.toneChat(options).execute();
-
-                            System.out.println(tone);
-
-                        }
 
                     } catch (IOException e) {
                         System.out.println(e.getMessage());
                     }
 
-                } catch (
-                        JSONException e)
-
+                } catch (JSONException e)
                 {
                     System.out.println(e.getMessage());
                 }
