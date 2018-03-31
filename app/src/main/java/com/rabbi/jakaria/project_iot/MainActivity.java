@@ -28,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                Intent intent = new Intent(MainActivity.this,
-                        Service_Analyze_IBM.class);
-                Intent intent1 = new Intent(MainActivity.this,
-                Service_Analyze_Indico.class);
-                startService(intent);
-                startService(intent1);
-                //get_permission();
+                //Intent intent = new Intent(MainActivity.this,
+                        //Service_Analyze_IBM.class);
+                //Intent intent1 = new Intent(MainActivity.this,
+                //Service_Analyze_Indico.class);
+                //startService(intent);
+                //startService(intent1);
+                get_permission();
 
             }
         });
@@ -54,8 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         } else {
-
-        }
+            Intent intent = new Intent(MainActivity.this,
+                    Service_Analyze_IBM.class);
+            Intent intent1 = new Intent(MainActivity.this,
+                    Service_Analyze_Indico.class);
+            startService(intent);
+            startService(intent1);        }
     }
 
     @Override
@@ -66,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
             case REQUEST_CODE_ASK_PERMISSIONS: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    //Intent intent = new Intent(MainActivity.this, Service_Analyze_IBM.class);
-                    //Intent intent1 = new Intent(MainActivity.this, Service_Analyze_Indico.class);
-                    //startService(intent);
-                    //startService(intent1);
+                    Intent intent = new Intent(MainActivity.this,
+                            Service_Analyze_IBM.class);
+                    Intent intent1 = new Intent(MainActivity.this,
+                            Service_Analyze_Indico.class);
+                    startService(intent);
+                    startService(intent1);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Please allow the permission",

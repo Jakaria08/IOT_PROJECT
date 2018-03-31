@@ -87,24 +87,24 @@ public class Service_Analyze_IBM extends Service {
                 try  {
 
                 // Text message///////////////////////
-//
-//            Cursor cursor = getContentResolver().query(Uri.parse("content://sms/sent"),
-//                    null, null, null, null);
-//
-//
-//            if (cursor.moveToFirst()) { // must check the result to prevent exception
-//                    //String msgData = "";
-//                    for (int idx = 0; idx < cursor.getCount(); idx++) {
-//                        msgData += " " + cursor.getString(cursor.getColumnIndexOrThrow("body"));
-//                        cursor.moveToNext();
-//                    }
-//                    // use msgData
-//            } else {
-//                // empty box, no SMS
-//            }
-//
-//
-//        System.out.println(msgData);
+
+            Cursor cursor = getContentResolver().query(Uri.parse("content://sms/sent"),
+                    null, null, null, null);
+
+
+            if (cursor.moveToFirst()) { // must check the result to prevent exception
+                    //String msgData = "";
+                    for (int idx = 0; idx < cursor.getCount(); idx++) {
+                        msgData += " " + cursor.getString(cursor.getColumnIndexOrThrow("body"));
+                        cursor.moveToNext();
+                    }
+                    // use msgData
+            } else {
+                // empty box, no SMS
+            }
+
+
+        System.out.println(msgData);
 
                 ///// Emotion from Server ////////////////
 
