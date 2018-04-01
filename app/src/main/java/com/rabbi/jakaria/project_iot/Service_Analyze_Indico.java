@@ -2,11 +2,9 @@ package com.rabbi.jakaria.project_iot;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
-
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import io.indico.Indico;
@@ -14,20 +12,29 @@ import io.indico.api.text.Emotion;
 import java.util.HashMap;
 
 public class Service_Analyze_Indico extends Service {
+
+    private final LocalBinder1 mBinder = new LocalBinder1();
+
+    public class LocalBinder1 extends Binder {
+        public Service_Analyze_Indico getService(){
+            return  Service_Analyze_Indico.this;
+        }
+    }
+
     public Service_Analyze_Indico() {
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        return null;
+        return mBinder;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Let it continue running until it is stopped.
         Toast.makeText(this, "Indico Service Started", Toast.LENGTH_LONG).show();
+        System.out.println("Indico Service Started");
 
         Thread thread = new Thread(new Runnable() {
 
@@ -64,12 +71,13 @@ public class Service_Analyze_Indico extends Service {
 
         thread.start();
 
-        return START_STICKY;
+        return Service.START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         Toast.makeText(this, "Indico Service Destroyed", Toast.LENGTH_LONG).show();
+        System.out.println("Indico Service Destroyed");
     }
 }

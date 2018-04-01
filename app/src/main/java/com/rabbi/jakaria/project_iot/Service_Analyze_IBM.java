@@ -2,14 +2,11 @@ package com.rabbi.jakaria.project_iot;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,22 +33,29 @@ public class Service_Analyze_IBM extends Service {
     String username;
     String password;
     protected Handler handler;
+    private final LocalBinder mBinder = new LocalBinder();
+
+    public class LocalBinder extends Binder{
+        public Service_Analyze_IBM getService(){
+            return  Service_Analyze_IBM.this;
+        }
+    }
 
     public Service_Analyze_IBM() {
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        return null;
+        return mBinder;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Let it continue running until it is stopped.
         Toast.makeText(this, "IBM Service Started", Toast.LENGTH_LONG).show();
-        //sleep(5000);
+        System.out.println("IBM Service Started");
+
         try {
 
             try {
@@ -140,12 +144,13 @@ public class Service_Analyze_IBM extends Service {
         thread.start();
 
 
-        return START_STICKY;
+        return Service.START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         Toast.makeText(this, "IBM Service Destroyed", Toast.LENGTH_LONG).show();
+        System.out.println("IBM Service Destroyed");
     }
 }
