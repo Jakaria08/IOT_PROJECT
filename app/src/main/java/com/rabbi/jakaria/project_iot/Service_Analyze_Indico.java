@@ -13,8 +13,6 @@ import java.util.HashMap;
 
 public class Service_Analyze_Indico extends Service {
 
-    private final LocalBinder1 mBinder = new LocalBinder1();
-
     public class LocalBinder1 extends Binder {
         public Service_Analyze_Indico getService(){
             return  Service_Analyze_Indico.this;
@@ -27,7 +25,7 @@ public class Service_Analyze_Indico extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        return mBinder;
+        return null;
     }
 
     @Override
@@ -36,7 +34,7 @@ public class Service_Analyze_Indico extends Service {
         Toast.makeText(this, "Indico Service Started", Toast.LENGTH_LONG).show();
         System.out.println("Indico Service Started");
 
-        Thread thread = new Thread(new Runnable() {
+        /*Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -69,7 +67,7 @@ public class Service_Analyze_Indico extends Service {
             }
         });
 
-        thread.start();
+        thread.start();*/
 
         return Service.START_STICKY;
     }

@@ -33,7 +33,6 @@ public class Service_Analyze_IBM extends Service {
     String username;
     String password;
     protected Handler handler;
-    private final LocalBinder mBinder = new LocalBinder();
 
     public class LocalBinder extends Binder{
         public Service_Analyze_IBM getService(){
@@ -47,7 +46,7 @@ public class Service_Analyze_IBM extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        return mBinder;
+        return null;
     }
 
     @Override
@@ -84,7 +83,7 @@ public class Service_Analyze_IBM extends Service {
         //handler.post(new Runnable() {
             //@Override
            // public void run() {
-        Thread thread = new Thread(new Runnable() {
+        /*Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -141,7 +140,7 @@ public class Service_Analyze_IBM extends Service {
             }
         });
 
-        thread.start();
+        thread.start();*/
 
 
         return Service.START_STICKY;

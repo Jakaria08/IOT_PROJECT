@@ -67,16 +67,16 @@ public class MainActivity extends AppCompatActivity {
             Intent myIntent1 = new Intent(this, IndicoReceiver.class);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                    0, myIntent, PendingIntent.FLAG_ONE_SHOT);
+                    0, myIntent, 0);
 
             PendingIntent pendingIntent1 = PendingIntent.getBroadcast(this,
-                    1, myIntent1, PendingIntent.FLAG_ONE_SHOT);
+                    1, myIntent1, 0);
 
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,ALARM_TRIGGER_AT_TIME,
-                    1000 * 60 ,pendingIntent);
+                    1000 * 30 ,pendingIntent);
 
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,ALARM_TRIGGER_AT_TIME,
-                    1000 * 60 ,pendingIntent1);
+                    1000 * 30 ,pendingIntent1);
 
 
         }
@@ -103,16 +103,16 @@ public class MainActivity extends AppCompatActivity {
                     Intent myIntent1 = new Intent(this, IndicoReceiver.class);
 
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                            0, myIntent, PendingIntent.FLAG_ONE_SHOT);
+                            0, myIntent, 0);
 
                     PendingIntent pendingIntent1 = PendingIntent.getBroadcast(this,
-                            1, myIntent1, PendingIntent.FLAG_ONE_SHOT);
+                            1, myIntent1, 0);
 
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,ALARM_TRIGGER_AT_TIME,
-                            1000 * 60 ,pendingIntent);
+                            1000 * 30 ,pendingIntent);
 
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,ALARM_TRIGGER_AT_TIME,
-                            1000 * 60 ,pendingIntent1);
+                            1000 * 30 ,pendingIntent1);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Please allow the permission",
@@ -122,5 +122,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

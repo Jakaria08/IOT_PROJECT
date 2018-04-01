@@ -14,7 +14,7 @@ public class IndicoReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context rcontext, Intent intent)
     {
-        Log.e("Broadcast", "inside on receive of IndicoReceiver");
+        Log.e("Broadcast", "inside on receive of IndicoReceiverBoot");
         Intent service1 = new Intent(rcontext, Service_Analyze_Indico.class);
         rcontext.startService(service1);
 

@@ -35,26 +35,31 @@
 
         <receiver
             android:name="com.rabbi.jakaria.project_iot.IBMReceiver"
+            android:enabled="true"
             android:exported="false">
         </receiver>
         <receiver
             android:name="com.rabbi.jakaria.project_iot.IndicoReceiver"
+            android:enabled="true"
             android:exported="false">
         </receiver>
         <receiver
-            android:name="com.rabbi.jakaria.project_iot.IBMReceiver_BOOT"
+            android:name="com.rabbi.jakaria.project_iot.IBMReceiverBoot"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.rabbi.jakaria.project_iot.IndicoReceiver_BOOT"
+            android:name="com.rabbi.jakaria.project_iot.IndicoReceiverBoot"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
+
 
     </application>
 
