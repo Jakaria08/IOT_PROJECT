@@ -6,16 +6,25 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
 
@@ -23,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final static int REQUEST_CODE_ASK_PERMISSIONS=123;
     public static final long ALARM_TRIGGER_AT_TIME = SystemClock.elapsedRealtime() + 20000;
+    String theString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +44,46 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 setResult(RESULT_OK);
+                String data = getData();
+                Log.d("data", "data: " + data);
                 get_permission();
 
             }
         });
+    }
+
+    private String getData()
+    {
+        String packageName = "com.blackcj.customkeyboard";
+        String filePath;
+        FileInputStream fis;
+
+        try {
+            PackageManager packageManager = getPackageManager();
+
+            ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+
+            filePath = appInfo.dataDir + "/files/data.txt";
+
+            System.out.println(filePath);
+
+            try {
+
+                fis = new FileInputStream(new File(filePath));
+                StringWriter writer = new StringWriter();
+                IOUtils.copy(fis, writer, "UTF-8");
+                theString = writer.toString();
+                Log.d("theString", "theString: " + theString);
+            } catch (IOException e) {
+                System.out.println("File not found: " + e.getMessage());
+                }
+
+        }catch (PackageManager.NameNotFoundException e) {
+
+        }
+
+        Log.d("theString", "theString: " + theString);
+        return theString;
     }
 
     private void get_permission() {

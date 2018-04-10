@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.rabbi.jakaria.project_iot"
@@ -11,15 +13,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
-
     dexOptions {
         javaMaxHeapSize "4g"
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
         }
     }
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/raw'] } }
@@ -38,5 +40,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     implementation files('libs/io.indico-3.15.0.jar')
     compile 'org.imgscalr:imgscalr-lib:4.2'
-    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 }
