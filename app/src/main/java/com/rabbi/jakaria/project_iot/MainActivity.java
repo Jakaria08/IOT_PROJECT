@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
             try {
 
                 fis = new FileInputStream(new File(filePath));
-                StringWriter writer = new StringWriter();
-                IOUtils.copy(fis, writer, "UTF-8");
-                theString = writer.toString();
+                theString = IOUtils.toString(fis, "UTF_8");
+
                 Log.d("theString", "theString: " + theString);
+
             } catch (IOException e) {
                 System.out.println("File not found: " + e.getMessage());
                 }
