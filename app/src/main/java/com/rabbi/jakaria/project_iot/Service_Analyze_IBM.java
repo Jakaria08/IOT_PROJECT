@@ -21,10 +21,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.DocumentAnalysis;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneCategory;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneInput;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneOptions;
+import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneScore;
 
 import static android.os.SystemClock.sleep;
 
@@ -38,6 +42,7 @@ public class Service_Analyze_IBM extends Service {
     String password;
     String filter = "";
     Date Start1,End1;
+    String text;
     boolean bool;
 
     protected Handler handler;
@@ -114,7 +119,7 @@ public class Service_Analyze_IBM extends Service {
                     if(bool == true) {
 
                         Start1 = formatter.parse(startDate + "T00:00:00");
-                        End1 = formatter.parse(startDate + "T11:59:59");
+                        End1 = formatter.parse(startDate + "T23:59:59");
                         bool = false;
 
                         SharedPreferences preferences1 = getApplicationContext().getSharedPreferences("SHARED", android.content.Context.MODE_PRIVATE);
@@ -147,6 +152,7 @@ public class Service_Analyze_IBM extends Service {
                         msgData += " " + cursor.getString(cursor.getColumnIndexOrThrow("body"));
                         cursor.moveToNext();
                     }
+                    text = msgData;
                     // use msgData
             } else {
                 // empty box, no SMS
@@ -158,28 +164,32 @@ public class Service_Analyze_IBM extends Service {
 
                 ///// Emotion from Server ////////////////
 
-              /*  try
+                //try
 
-                {
-                    try {
-                        JSONObject tones = new JSONObject(IOUtils.toString(getResources()
-                                .openRawResource(R.raw.tonechat), "UTF-8")); // Convert the file into a JSON object
+                //{
+                    //try {
+                        //JSONObject tones = new JSONObject(IOUtils.toString(getResources()
+                                //.openRawResource(R.raw.tonechat), "UTF-8")); // Convert the file into a JSON object
 
                         ToneInput toneInput = new ToneInput.Builder()
-                                .text(tones.getString("text")).build();
+                                .text(text).build();
                         ToneOptions options = new ToneOptions.Builder()
                                 .toneInput(toneInput).build();
                         ToneAnalysis tone = toneAnalyzer.tone(options).execute();
-                        System.out.println(tone);
+                        //System.out.println(tone);
+                        DocumentAnalysis tone1 = tone.getDocumentTone();
+                        String tone2 = tone1.getTones().get(0).getToneName();
+                        //System.out.println(tone);
 
+                        System.out.println(tone2);
 
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    //} catch (IOException e) {
+                        //System.out.println(e.getMessage());
+                    //}
 
-                } catch (JSONException e) {
-                    System.out.println(e.getMessage());
-                }*/
+                //} catch (JSONException e) {
+                    //System.out.println(e.getMessage());
+                //}
 
                 } catch (Exception e) {
                     e.printStackTrace();
