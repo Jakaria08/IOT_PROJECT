@@ -2,6 +2,7 @@ package com.rabbi.jakaria.project_iot;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
@@ -17,6 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneInput;
@@ -29,9 +33,13 @@ public class Service_Analyze_IBM extends Service {
 
     final ToneAnalyzer toneAnalyzer = new ToneAnalyzer("2018-03-27");
     int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    String msgData = "";
+
     String username;
     String password;
+    String filter = "";
+    Date Start1,End1;
+    boolean bool;
+
     protected Handler handler;
 
     public class LocalBinder extends Binder{
@@ -83,16 +91,54 @@ public class Service_Analyze_IBM extends Service {
         //handler.post(new Runnable() {
             //@Override
            // public void run() {
-        /*Thread thread = new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try  {
+                    String msgData = "";
 
                 // Text message///////////////////////
+                    SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+
+
+                    Date today = Calendar.getInstance().getTime();
+                    String startDate = formatter1.format(today);
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("SHARED", android.content.Context.MODE_PRIVATE);
+                    bool =  preferences.getBoolean("key", true);
+                    System.out.println(bool);
+                    // Now create a start and end time for this date in order to setup the filter.
+                    if(bool == true) {
+
+                        Start1 = formatter.parse(startDate + "T00:00:00");
+                        End1 = formatter.parse(startDate + "T11:59:59");
+                        bool = false;
+
+                        SharedPreferences preferences1 = getApplicationContext().getSharedPreferences("SHARED", android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences1.edit();
+                        editor.putBoolean("key", bool);
+                        editor.commit();
+                    }
+                    else
+                    {
+                        Start1 = formatter.parse(startDate + "T12:00:00");
+                        End1 = formatter.parse(startDate + "T23:59:59");
+                        bool = true;
+
+                        SharedPreferences preferences2 = getApplicationContext().getSharedPreferences("SHARED", android.content.Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences2.edit();
+                        editor.putBoolean("key", bool);
+                        editor.commit();
+                        System.out.println(bool);
+                    }
+                    // Now create the filter and query the messages.
+                    filter = "date>=" + Start1.getTime() + " and date<=" + End1.getTime();
 
             Cursor cursor = getContentResolver().query(Uri.parse("content://sms/sent"),
-                    null, null, null, null);
+                    null, filter, null, null);
 
 
             if (cursor.moveToFirst()) { // must check the result to prevent exception
@@ -108,10 +154,11 @@ public class Service_Analyze_IBM extends Service {
 
 
         System.out.println(msgData);
+            System.out.println(filter);
 
                 ///// Emotion from Server ////////////////
 
-                try
+              /*  try
 
                 {
                     try {
@@ -132,7 +179,7 @@ public class Service_Analyze_IBM extends Service {
 
                 } catch (JSONException e) {
                     System.out.println(e.getMessage());
-                }
+                }*/
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -140,7 +187,7 @@ public class Service_Analyze_IBM extends Service {
             }
         });
 
-        thread.start();*/
+        thread.start();
 
 
         return Service.START_STICKY;
