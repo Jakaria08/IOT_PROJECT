@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.ToneAnalyzer;
 
 import org.apache.commons.io.IOUtils;
@@ -32,6 +34,12 @@ import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneScore;
 
 import static android.os.SystemClock.sleep;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+
 
 public class Service_Analyze_IBM extends Service {
 
@@ -44,6 +52,10 @@ public class Service_Analyze_IBM extends Service {
     Date Start1,End1;
     String text;
     boolean bool;
+
+    Firebase firebase;
+
+
 
     protected Handler handler;
 
@@ -113,7 +125,7 @@ public class Service_Analyze_IBM extends Service {
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("SHARED", android.content.Context.MODE_PRIVATE);
-                    bool =  preferences.getBoolean("key", true);
+                    bool =  preferences.getBoolean("key1", true);
                     System.out.println(bool);
                     // Now create a start and end time for this date in order to setup the filter.
                     if(bool == true) {
@@ -124,7 +136,7 @@ public class Service_Analyze_IBM extends Service {
 
                         SharedPreferences preferences1 = getApplicationContext().getSharedPreferences("SHARED", android.content.Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences1.edit();
-                        editor.putBoolean("key", bool);
+                        editor.putBoolean("key1", bool);
                         editor.commit();
                     }
                     else
@@ -135,7 +147,7 @@ public class Service_Analyze_IBM extends Service {
 
                         SharedPreferences preferences2 = getApplicationContext().getSharedPreferences("SHARED", android.content.Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences2.edit();
-                        editor.putBoolean("key", bool);
+                        editor.putBoolean("key1", bool);
                         editor.commit();
                         System.out.println(bool);
                     }
@@ -182,6 +194,12 @@ public class Service_Analyze_IBM extends Service {
                         //System.out.println(tone);
 
                         System.out.println(tone2);
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("message_IBM");
+
+                    myRef.child("Emotion").push().setValue(tone2);
+                    myRef.child("Emotion").push().setValue(today);
 
                     //} catch (IOException e) {
                         //System.out.println(e.getMessage());

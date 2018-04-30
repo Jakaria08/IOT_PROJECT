@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private String getData()
+    public String getData()
     {
         String packageName = "com.blackcj.customkeyboard";
         String filePath;
