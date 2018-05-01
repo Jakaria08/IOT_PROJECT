@@ -11,7 +11,7 @@ import android.util.Log;
 /**
  * Created by root on 31/03/18.
  */
-
+// Start after boot up
 public class IBMReceiverBoot extends BroadcastReceiver {
 
     public static final long ALARM_TRIGGER_AT_TIME = SystemClock.elapsedRealtime() + 20000;
