@@ -16,4 +16,17 @@
 * Time is set to 12 hours, so that the services can run in a 12 hours interval.
 5. Installation
 * Installation is easy. Build the apk and run
-* In first run message read permission should be granted for reading messages of the default app
+* In first run, message read permission should be granted for reading messages of the default app
+
+
+## Overall System Architecture of the Project
+![1](https://user-images.githubusercontent.com/7825643/39469285-ac8dd8ee-4cf4-11e8-9d69-a41bac89f09b.png)
+
+## Modules in the Project
+![2](https://user-images.githubusercontent.com/7825643/39469332-e8180c54-4cf4-11e8-9970-2f9737534c84.png)
+
+## Running App
+![3](https://user-images.githubusercontent.com/7825643/39469397-36d7d19e-4cf5-11e8-9a6b-22c2ab3d3b40.png)
+
+## Reading data from keyboard app
+![4](https://user-images.githubusercontent.com/7825643/39469426-5dbc2b16-4cf5-11e8-9de0-773cfe548088.png)
