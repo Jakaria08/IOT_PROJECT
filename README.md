@@ -3,7 +3,7 @@
 1. https://github.com/Jakaria08/AndroidCustomKeyboard
 2. https://github.com/Jakaria08/emotion-analysis
 ## Classes in Source Folder
-Path: IOT_PROJECT/app/src/main/java/com/rabbi/jakaria/project_iot/
+Path: https://github.com/Jakaria08/IOT_PROJECT/tree/master/app/src/main/java/com/rabbi/jakaria/project_iot
 1. IBMReceiver and IndicoREceiver class:
 * This classes inherit BroadcastReceiver class 
 * Needed when the app is in background and the background service is needed to run
