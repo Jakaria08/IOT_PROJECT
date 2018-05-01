@@ -1,4 +1,7 @@
 # IOT_PROJECT
+## Link to the associated Projects
+1. https://github.com/Jakaria08/AndroidCustomKeyboard
+2. https://github.com/Jakaria08/emotion-analysis
 ## Classes in Source Folder
 1. IBMReceiver and IndicoREceiver class:
 * This classes inherit BroadcastReceiver class 
