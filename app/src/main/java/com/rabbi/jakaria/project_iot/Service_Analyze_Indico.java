@@ -21,6 +21,9 @@ import io.indico.Indico;
 import io.indico.api.text.Emotion;
 import java.util.HashMap;
 
+// Service for getting text data, send to Indico service, get emotion and send to Firebase
+
+
 public class Service_Analyze_Indico extends Service {
 
     String filter = "";
