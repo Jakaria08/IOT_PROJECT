@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
                             1, myIntent1, 0);
 
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,ALARM_TRIGGER_AT_TIME,
-                            1000 * 30 ,pendingIntent);
+                            1000 * 60 * 60 * 12 ,pendingIntent);
 
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,ALARM_TRIGGER_AT_TIME,
-                            1000 * 30 ,pendingIntent1);
+                            1000 * 60 * 60 * 12 ,pendingIntent1);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Please allow the permission",
