@@ -16,4 +16,4 @@
 * Time is set to 12 hours, so that the services can run in a 12 hours interval.
 5. Installation
 * Installation is easy. Build the apk and run
-* In first run message read permission should be granted for reading messages app inbox or sent directory
+* In first run message read permission should be granted for reading messages of the default app
