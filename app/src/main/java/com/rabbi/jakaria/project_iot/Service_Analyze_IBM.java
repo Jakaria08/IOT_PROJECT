@@ -3,6 +3,8 @@ package com.rabbi.jakaria.project_iot;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
@@ -19,6 +21,9 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,6 +57,7 @@ public class Service_Analyze_IBM extends Service {
     Date Start1,End1;
     String text;
     boolean bool;
+    String theString;
 
     Firebase firebase;
 
@@ -72,6 +78,52 @@ public class Service_Analyze_IBM extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         return null;
+    }
+
+    public String getData()
+    {
+        String packageName = "com.blackcj.customkeyboard";
+        String filePath;
+        FileInputStream fis;
+
+        try {
+            PackageManager packageManager = getPackageManager();
+
+            ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+
+            filePath = appInfo.dataDir + "/files/data.txt";
+
+            System.out.println(filePath);
+
+            try {
+
+                fis = new FileInputStream(new File(filePath));
+                theString = IOUtils.toString(fis, "UTF_8");
+                // remove all contents
+                //FileOutputStream writer = new FileOutputStream(filePath);
+
+                Log.d("theString", "theStringIBM: " + theString);
+                //write locally
+                //File path = getApplicationContext().getFilesDir();
+                //File file = new File(path, "keyboardstring.txt");
+
+                //FileOutputStream stream = new FileOutputStream(file);
+                //try {
+                    //stream.write(theString.getBytes());
+                //} finally {
+                    //stream.close();
+                //}
+
+            } catch (IOException e) {
+                System.out.println("File not found: " + e.getMessage());
+            }
+
+        }catch (PackageManager.NameNotFoundException e) {
+
+        }
+
+        Log.d("theString", "theString: " + theString);
+        return theString;
     }
 
     @Override
@@ -171,8 +223,15 @@ public class Service_Analyze_IBM extends Service {
             }
 
 
+
+         theString = getData();
+
         System.out.println(msgData);
             System.out.println(filter);
+
+            text = text+"."+theString;
+
+            System.out.println(text);
 
                 ///// Emotion from Server ////////////////
 

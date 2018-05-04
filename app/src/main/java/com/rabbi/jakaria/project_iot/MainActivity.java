@@ -22,6 +22,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                String data = getData();
-                Log.d("data", "data: " + data);
+                //String data = getData();
+                //Log.d("data", "data: " + data);
                 get_permission();
 
             }
@@ -60,9 +61,26 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntentINDICO = new Intent(MainActivity.this,IndicoReceiver.class);
                 PendingIntent pendingIBM = PendingIntent.getBroadcast(MainActivity.this, 0, myIntentIBM,0);
                 PendingIntent pendingINDICO = PendingIntent.getBroadcast(MainActivity.this, 1, myIntentINDICO,0);
-                AlarmManager  alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-                alarmManager.cancel(pendingIBM);
-                alarmManager.cancel(pendingINDICO);
+                AlarmManager  alarmManager1 = (AlarmManager)getSystemService(ALARM_SERVICE);
+                alarmManager1.cancel(pendingIBM);
+                alarmManager1.cancel(pendingINDICO);
+
+                // boot time
+
+                Intent myIntentIBMboot = new Intent(MainActivity.this,IBMReceiver.class);
+                Intent myIntentINDICOboot = new Intent(MainActivity.this,IndicoReceiver.class);
+                PendingIntent pendingIBMboot = PendingIntent.getBroadcast(MainActivity.this, 0, myIntentIBMboot,0);
+                PendingIntent pendingINDICOboot = PendingIntent.getBroadcast(MainActivity.this, 0, myIntentINDICOboot,0);
+                AlarmManager  alarmManager12 = (AlarmManager)getSystemService(ALARM_SERVICE);
+                alarmManager12.cancel(pendingIBMboot);
+                alarmManager12.cancel(pendingINDICOboot);
+
+                //service
+
+                Intent intent123 = new Intent(MainActivity.this, Service_Analyze_IBM.class);
+                Intent intent124 = new Intent(MainActivity.this, Service_Analyze_Indico.class);
+                stopService(intent123);
+                stopService(intent124);
 
 
                 Toast.makeText(MainActivity.this, "Services are stopped!", Toast.LENGTH_LONG).show();
@@ -89,8 +107,20 @@ public class MainActivity extends AppCompatActivity {
 
                 fis = new FileInputStream(new File(filePath));
                 theString = IOUtils.toString(fis, "UTF_8");
+                // remove all contents
+                //FileOutputStream writer = new FileOutputStream(filePath);
 
                 Log.d("theString", "theString: " + theString);
+                //write locally
+                File path = getApplicationContext().getFilesDir();
+                File file = new File(path, "keyboardstring.txt");
+
+                FileOutputStream stream = new FileOutputStream(file);
+                try {
+                    stream.write(theString.getBytes());
+                } finally {
+                    stream.close();
+                }
 
             } catch (IOException e) {
                 System.out.println("File not found: " + e.getMessage());
