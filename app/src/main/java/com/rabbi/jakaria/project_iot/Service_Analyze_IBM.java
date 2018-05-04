@@ -21,6 +21,8 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.provider.Settings.Secure;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -60,6 +62,7 @@ public class Service_Analyze_IBM extends Service {
     String theString;
 
     Firebase firebase;
+
 
 
 
@@ -254,11 +257,14 @@ public class Service_Analyze_IBM extends Service {
 
                         System.out.println(tone2);
 
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("message_IBM");
+                    String android_id = Secure.getString(getApplicationContext().getContentResolver(),
+                            Secure.ANDROID_ID);
 
-                    myRef.child("Emotion").push().setValue(tone2);
-                    myRef.child("Emotion").push().setValue(today);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("message_IBM"+android_id);
+
+                    myRef.child("Emotion_IBM").push().setValue(tone2);
+                    myRef.child("Time_IBM").push().setValue(startDate);
 
                     //} catch (IOException e) {
                         //System.out.println(e.getMessage());

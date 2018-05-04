@@ -28,6 +28,7 @@ import java.util.Map;
 import io.indico.Indico;
 import io.indico.api.text.Emotion;
 import java.util.HashMap;
+import android.provider.Settings.Secure;
 
 // Service for getting text data, send to Indico service, get emotion and send to Firebase
 
@@ -201,11 +202,14 @@ public class Service_Analyze_Indico extends Service {
 
                     System.out.println(maxEntry.getKey());
 
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("message_INDICO");
+                    String android_id = Secure.getString(getApplicationContext().getContentResolver(),
+                            Secure.ANDROID_ID);
 
-                    myRef.child("Emotion").push().setValue(maxEntry.getKey());
-                    myRef.child("Emotion").push().setValue(today);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("message_INDICO"+android_id);
+
+                    myRef.child("Emotion_Indico").push().setValue(maxEntry.getKey());
+                    myRef.child("Time_Indico").push().setValue(startDate);
 
                 } catch (Exception e) {
                     e.printStackTrace();
