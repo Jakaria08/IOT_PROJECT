@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by root on 31/03/18.
  */
-
+// Broadcast Receiver for IBM service
 public class IBMReceiver extends BroadcastReceiver {
 
     @Override

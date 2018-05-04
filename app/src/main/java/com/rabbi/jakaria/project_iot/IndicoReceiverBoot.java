@@ -11,6 +11,7 @@ import android.util.Log;
 /**
  * Created by root on 31/03/18.
  */
+// Start after boot up
 
 public class IndicoReceiverBoot extends BroadcastReceiver {
 

@@ -39,7 +39,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-
+// Service for getting text data, send to IBM service, get emotion and send to Firebase
 
 public class Service_Analyze_IBM extends Service {
 
