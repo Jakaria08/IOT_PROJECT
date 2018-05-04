@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button startButton = (Button) findViewById(R.id.button);
+        Button stopButton = (Button) findViewById(R.id.button3);
 
         startButton.setOnClickListener(new View.OnClickListener() {
 
@@ -48,6 +49,23 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("data", "data: " + data);
                 get_permission();
 
+            }
+        });
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                Intent myIntentIBM = new Intent(MainActivity.this,IBMReceiver.class);
+                Intent myIntentINDICO = new Intent(MainActivity.this,IndicoReceiver.class);
+                PendingIntent pendingIBM = PendingIntent.getBroadcast(MainActivity.this, 0, myIntentIBM,0);
+                PendingIntent pendingINDICO = PendingIntent.getBroadcast(MainActivity.this, 1, myIntentINDICO,0);
+                AlarmManager  alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                alarmManager.cancel(pendingIBM);
+                alarmManager.cancel(pendingINDICO);
+
+
+                Toast.makeText(MainActivity.this, "Services are stopped!", Toast.LENGTH_LONG).show();
             }
         });
     }
